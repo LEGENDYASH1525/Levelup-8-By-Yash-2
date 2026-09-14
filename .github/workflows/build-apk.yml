@@ -60,7 +60,12 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Configure Capacitor Android
+      - name: Set up JDK 21 for Gradle Build
+       uses: actions/setup-java@v4
+    with:
+      distribution: 'temurin'
+      java-version: '21' 
+      
         run: |
           npm install @capacitor/core @capacitor/cli @capacitor/android
           if [ ! -d "android" ]; then
