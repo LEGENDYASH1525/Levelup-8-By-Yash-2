@@ -18,6 +18,28 @@ jobs:
         with:
           node-version: 20
 
+      - name: Reorganize Source Files into Proper Folders
+        run: |
+          mkdir -p src/components src/data src/utils
+
+          # Move utils if present in root
+          mv audio.ts src/utils/ 2>/dev/null || true
+
+          # Move data if present in root
+          mv curriculumData.ts leaderboardData.ts src/data/ 2>/dev/null || true
+
+          # Move components if present in root
+          mv AiMentorModal.tsx BadgesView.tsx DailyQuizModal.tsx \
+             LeaderboardView.tsx LessonCard.tsx Navbar.tsx \
+             OnboardingModal.tsx ProfileModal.tsx StudentAvatar.tsx \
+             ThreeStepLessonModal.tsx src/components/ 2>/dev/null || true
+
+          # Move main entry files if present in root
+          mv App.tsx types.ts main.tsx index.css src/ 2>/dev/null || true
+
+          # Ensure index.html references /src/main.tsx
+          sed -i 's|src="./main.tsx"|src="/src/main.tsx"|g' index.html || true
+
       - name: Install Dependencies
         run: npm install
 
@@ -27,7 +49,7 @@ jobs:
       - name: Setup Android SDK Tools
         uses: android-actions/setup-android@v3
 
-      - name: Initialize Capacitor Android if Missing
+      - name: Initialize Capacitor Android
         run: |
           if [ ! -d "android" ]; then
             npx cap init "LevelUp 8" "com.levelup8.app" --web-dir "dist"
