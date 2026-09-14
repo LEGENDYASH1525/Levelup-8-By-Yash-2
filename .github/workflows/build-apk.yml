@@ -64,6 +64,24 @@ jobs:
           fi
           npx cap sync android
 
+          # Fix duplicate Kotlin stdlib error in gradle.properties
+          echo "android.enableJetifier=true" >> android/gradle.properties
+          echo "android.jetifier.ignorelist=kotlin-stdlib" >> android/gradle.properties
+
+          # Force single unified kotlin-stdlib across all submodules
+          cat << 'EOF' >> android/build.gradle
+
+          allprojects {
+              configurations.all {
+                  resolutionStrategy {
+                      force 'org.jetbrains.kotlin:kotlin-stdlib:1.8.22'
+                      force 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22'
+                      force 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.22'
+                  }
+              }
+          }
+          EOF
+
       - name: Make Gradle Wrapper Executable
         run: chmod +x android/gradlew
 
