@@ -1,0 +1,6 @@
+{
+  "name": "LevelUp 8 by Yash",
+  "description": "8th Standard Easy Learning web & mobile app with 3D dark blue UI, onboarding, real leaderboard, and 3-step lessons.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+@layer utilities {
+  /* 3D Tactile Buttons */
+  .btn-3d-primary {
+    background: linear-gradient(180deg, #3B82F6 0%, #1D4ED8 100%);
+    box-shadow: 0 4px 0 #1E3A8A, 0 8px 16px rgba(29, 78, 216, 0.35);
+    transition: all 0.1s ease-in-out;
+  }
+  .btn-3d-primary:hover {
+    background: linear-gradient(180deg, #60A5FA 0%, #2563EB 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 0 #1E3A8A, 0 10px 20px rgba(37, 99, 235, 0.4);
+  }
+  .btn-3d-primary:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #1E3A8A, 0 3px 6px rgba(29, 78, 216, 0.25);
+  }
+
+  .btn-3d-emerald {
+    background: linear-gradient(180deg, #10B981 0%, #047857 100%);
+    box-shadow: 0 4px 0 #064E3B, 0 8px 16px rgba(16, 185, 129, 0.35);
+    transition: all 0.1s ease-in-out;
+  }
+  .btn-3d-emerald:hover {
+    background: linear-gradient(180deg, #34D399 0%, #059669 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 0 #064E3B, 0 10px 20px rgba(16, 185, 129, 0.4);
+  }
+  .btn-3d-emerald:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #064E3B, 0 3px 6px rgba(16, 185, 129, 0.25);
+  }
+
+  .btn-3d-amber {
+    background: linear-gradient(180deg, #F59E0B 0%, #D97706 100%);
+    box-shadow: 0 4px 0 #92400E, 0 8px 16px rgba(245, 158, 11, 0.35);
+    transition: all 0.1s ease-in-out;
+  }
+  .btn-3d-amber:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #92400E, 0 3px 6px rgba(245, 158, 11, 0.25);
+  }
+
+  .btn-3d-slate {
+    background: linear-gradient(180deg, #1E293B 0%, #0F172A 100%);
+    box-shadow: 0 4px 0 #090D16, 0 6px 12px rgba(0, 0, 0, 0.4);
+    transition: all 0.1s ease-in-out;
+  }
+  .btn-3d-slate:hover {
+    background: linear-gradient(180deg, #334155 0%, #1E293B 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 0 #090D16, 0 8px 16px rgba(0, 0, 0, 0.5);
+  }
+  .btn-3d-slate:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #090D16, 0 2px 4px rgba(0, 0, 0, 0.4);
+  }
+
+  /* 3D Card Depth */
+  .card-3d-dark {
+    background: linear-gradient(175deg, #16223F 0%, #0F172A 100%);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    box-shadow: 0 12px 28px -6px rgba(2, 6, 23, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  }
+
+  .card-3d-hover {
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .card-3d-hover:hover {
+    transform: translateY(-4px);
+    border-color: rgba(96, 165, 250, 0.45);
+    box-shadow: 0 20px 35px -8px rgba(30, 58, 138, 0.35), 0 0 20px rgba(59, 130, 246, 0.15);
+  }
+}
+
+/* Custom Webkit Scrollbar for Dark Blue theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #090E1F;
+}
+::-webkit-scrollbar-thumb {
+  background: #1E293B;
+  border-radius: 4px;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3B82F6;
+}
+
