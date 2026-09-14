@@ -10,70 +10,71 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js Environment
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Reorganize Source Files into Proper Folders
+      - name: Organize Project Folders
         run: |
           mkdir -p src/components src/data src/utils
 
-          # Move utils if present in root
+          # Move utils
           mv audio.ts src/utils/ 2>/dev/null || true
 
-          # Move data if present in root
+          # Move data
           mv curriculumData.ts leaderboardData.ts src/data/ 2>/dev/null || true
 
-          # Move components if present in root
+          # Move all components
           mv AiMentorModal.tsx BadgesView.tsx DailyQuizModal.tsx \
              LeaderboardView.tsx LessonCard.tsx Navbar.tsx \
              OnboardingModal.tsx ProfileModal.tsx StudentAvatar.tsx \
              ThreeStepLessonModal.tsx src/components/ 2>/dev/null || true
 
-          # Move main entry files if present in root
+          # Move app entry files
           mv App.tsx types.ts main.tsx index.css src/ 2>/dev/null || true
 
-          # Ensure index.html references /src/main.tsx
+          # Ensure index.html references the bundled entry
           sed -i 's|src="./main.tsx"|src="/src/main.tsx"|g' index.html || true
 
-      - name: Install Dependencies
+      - name: Install Node Dependencies
         run: npm install
 
-      - name: Build Web Assets
-        run: npm run build
-
-      - name: Setup Android SDK Tools
-        uses: android-actions/setup-android@v3
-
-      - name: Initialize Capacitor Android
-        run: |
-          if [ ! -d "android" ]; then
-            npx cap init "LevelUp 8" "com.levelup8.app" --web-dir "dist"
-            npx cap add android
-          fi
-          npx cap sync android
+      - name: Build Web Application (Vite Only)
+        run: npx vite build
 
       - name: Set up Java JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
-          cache: 'gradle'
 
-      - name: Make Gradlew Executable
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Configure Capacitor Android
+        run: |
+          npm install @capacitor/core @capacitor/cli @capacitor/android
+          if [ ! -d "android" ]; then
+            npx cap init "LevelUp 8" "com.levelup8.app" --web-dir "dist"
+            npx cap add android
+          fi
+          npx cap sync android
+
+      - name: Make Gradle Wrapper Executable
         run: chmod +x android/gradlew
 
-      - name: Build Debug APK
+      - name: Assemble Debug APK
         run: |
           cd android
-          ./gradlew assembleDebug
+          ./gradlew assembleDebug --no-daemon
 
-      - name: Upload APK File
+      - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: LevelUp-8-APK
+          name: LevelUp-8-Debug-APK
           path: android/app/build/outputs/apk/debug/*.apk
+          retention-days: 14
